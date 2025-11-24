@@ -15,6 +15,13 @@ Le **Jeu de Pandu** est un jeu de devinette de mots pour deux joueurs, développ
 - **Égalité 2-2** après 4 rounds → round supplémentaire
 - Seules les **lettres de a à z** sont autorisées
 
+## ✅ Les Captures D'écran
+<p align='center'> 
+    <img src = './info/info.png' alt='' width='30%'> 
+    <img src = './info/info_2.png' alt='' width='30%'> 
+    <img src = './info/info_3.png' alt='' width='30%'> 
+</p>
+
 ## 🚀 Technologies Utilisées
 
 ### Version Dart (Console)
@@ -30,14 +37,15 @@ Le **Jeu de Pandu** est un jeu de devinette de mots pour deux joueurs, développ
 
 ## 📁 Structure du Projet
 
+```
 jeu_pandu/
 │
 ├── pendu.dart # Version console Dart
 ├── pandu.html # Version web complète
 ├── README.md # Documentation du projet
 └── assets/ # Ressources supplémentaires
-└── screenshots/ # Captures d'écran
-
+└── info/ # Captures d'écran
+```
 
 ## 🛠️ Installation et Exécution
 
