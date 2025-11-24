@@ -22,6 +22,9 @@ Le **Jeu de Pandu** est un jeu de devinette de mots pour deux joueurs, développ
     <img src = './info/info_3.png' alt='' width='30%'> 
 </p>
 
+## accder le jeu [ici](https://lionel-hue.github.io/Pandu/) 
+
+
 ## 🚀 Technologies Utilisées
 
 ### Version Dart (Console)
