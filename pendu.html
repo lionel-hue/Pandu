@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeu de Pandu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tw-animate-css@1.0.0/dist/index.min.js"></script>
+  <style>
+    @import 'tailwindcss';
+    @import 'tw-animate-css';
+
+    @custom-variant dark (&:is(.dark *));
+
+    :root {
+      --background: oklch(1 0 0);
+      --foreground: oklch(0.145 0 0);
+      --card: oklch(1 0 0);
+      --card-foreground: oklch(0.145 0 0);
+      --popover: oklch(1 0 0);
+      --popover-foreground: oklch(0.145 0 0);
+      --primary: oklch(0.205 0 0);
+      --primary-foreground: oklch(0.985 0 0);
+      --secondary: oklch(0.97 0 0);
+      --secondary-foreground: oklch(0.205 0 0);
+      --muted: oklch(0.97 0 0);
+      --muted-foreground: oklch(0.556 0 0);
+      --accent: oklch(0.97 0 0);
+      --accent-foreground: oklch(0.205 0 0);
+      --destructive: oklch(0.577 0.245 27.325);
+      --destructive-foreground: oklch(0.577 0.245 27.325);
+      --border: oklch(0.922 0 0);
+      --input: oklch(0.922 0 0);
+      --ring: oklch(0.708 0 0);
+      --chart-1: oklch(0.646 0.222 41.116);
+      --chart-2: oklch(0.6 0.118 184.704);
+      --chart-3: oklch(0.398 0.07 227.392);
+      --chart-4: oklch(0.828 0.189 84.429);
+      --chart-5: oklch(0.769 0.188 70.08);
+      --radius: 0.625rem;
+      --sidebar: oklch(0.985 0 0);
+      --sidebar-foreground: oklch(0.145 0 0);
+      --sidebar-primary: oklch(0.205 0 0);
+      --sidebar-primary-foreground: oklch(0.985 0 0);
+      --sidebar-accent: oklch(0.97 0 0);
+      --sidebar-accent-foreground: oklch(0.205 0 0);
+      --sidebar-border: oklch(0.922 0 0);
+      --sidebar-ring: oklch(0.708 0 0);
+    }
+
+    .dark {
+      --background: oklch(0.145 0 0);
+      --foreground: oklch(0.985 0 0);
+      --card: oklch(0.145 0 0);
+      --card-foreground: oklch(0.985 0 0);
+      --popover: oklch(0.145 0 0);
+      --popover-foreground: oklch(0.985 0 0);
+      --primary: oklch(0.985 0 0);
+      --primary-foreground: oklch(0.205 0 0);
+      --secondary: oklch(0.269 0 0);
+      --secondary-foreground: oklch(0.985 0 0);
+      --muted: oklch(0.269 0 0);
+      --muted-foreground: oklch(0.708 0 0);
+      --accent: oklch(0.269 0 0);
+      --accent-foreground: oklch(0.985 0 0);
+      --destructive: oklch(0.396 0.141 25.723);
+      --destructive-foreground: oklch(0.637 0.237 25.331);
+      --border: oklch(0.269 0 0);
+      --input: oklch(0.269 0 0);
+      --ring: oklch(0.439 0 0);
+      --chart-1: oklch(0.488 0.243 264.376);
+      --chart-2: oklch(0.696 0.17 162.48);
+      --chart-3: oklch(0.769 0.188 70.08);
+      --chart-4: oklch(0.627 0.265 303.9);
+      --chart-5: oklch(0.645 0.246 16.439);
+      --sidebar: oklch(0.205 0 0);
+      --sidebar-foreground: oklch(0.985 0 0);
+      --sidebar-primary: oklch(0.488 0.243 264.376);
+      --sidebar-primary-foreground: oklch(0.985 0 0);
+      --sidebar-accent: oklch(0.269 0 0);
+      --sidebar-accent-foreground: oklch(0.985 0 0);
+      --sidebar-border: oklch(0.269 0 0);
+      --sidebar-ring: oklch(0.439 0 0);
+    }
+
+    @theme inline {
+      --font-sans: 'Geist', 'Geist Fallback';
+      --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
+      --color-card: var(--card);
+      --color-card-foreground: var(--card-foreground);
+      --color-popover: var(--popover);
+      --color-popover-foreground: var(--popover-foreground);
+      --color-primary: var(--primary);
+      --color-primary-foreground: var(--primary-foreground);
+      --color-secondary: var(--secondary);
+      --color-secondary-foreground: var(--secondary-foreground);
+      --color-muted: var(--muted);
+      --color-muted-foreground: var(--muted-foreground);
+      --color-accent: var(--accent);
+      --color-accent-foreground: var(--accent-foreground);
+      --color-destructive: var(--destructive);
+      --color-destructive-foreground: var(--destructive-foreground);
+      --color-border: var(--border);
+      --color-input: var(--input);
+      --color-ring: var(--ring);
+      --color-chart-1: var(--chart-1);
+      --color-chart-2: var(--chart-2);
+      --color-chart-3: var(--chart-3);
+      --color-chart-4: var(--chart-4);
+      --color-chart-5: var(--chart-5);
+      --radius-sm: calc(var(--radius) - 4px);
+      --radius-md: calc(var(--radius) - 2px);
+      --radius-lg: var(--radius);
+      --radius-xl: calc(var(--radius) + 4px);
+      --color-sidebar: var(--sidebar);
+      --color-sidebar-foreground: var(--sidebar-foreground);
+      --color-sidebar-primary: var(--sidebar-primary);
+      --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+      --color-sidebar-accent: var(--sidebar-accent);
+      --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+      --color-sidebar-border: var(--sidebar-border);
+      --color-sidebar-ring: var(--sidebar-ring);
+    }
+
+    @layer base {
+      * {
+        @apply border-border outline-ring/50;
+      }
+
+      body {
+        @apply bg-background text-foreground;
+      }
+    }
+
+    .letter-box {
+      @apply inline-block w-12 h-12 border-2 border-primary rounded-lg flex items-center justify-center mx-1 text-xl font-bold;
+    }
+
+    .keyboard-key {
+      @apply px-4 py-3 bg-secondary hover:bg-accent rounded-lg font-semibold transition-all duration-200 active:scale-95;
+    }
+
+    .keyboard-key:disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-blue-900">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- En-tête -->
+    <header class="text-center mb-8 animate-fade-in">
+      <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-2">🎮 Jeu de Pandu</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">Devinez les mots et marquez des points !</p>
+    </header>
+
+    <!-- Écran d'accueil -->
+    <div id="ecran-accueil" class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 animate-slide-up">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Bienvenue !</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">Entrez les noms des joueurs pour commencer la partie
+        </p>
+      </div>
+
+      <div class="space-y-4 mb-6">
+        <div>
+          <label for="joueur1" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Joueur 1
+          </label>
+          <input type="text" id="joueur1"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+            placeholder="Nom du joueur 1" value="Lionel">
+        </div>
+        <div>
+          <label for="joueur2" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Joueur 2
+          </label>
+          <input type="text" id="joueur2"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+            placeholder="Nom du joueur 2" value="Mariel">
+        </div>
+      </div>
+
+      <button onclick="demarrerJeu()"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95">
+        🚀 Commencer la Partie
+      </button>
+
+      <!-- Règles du jeu -->
+      <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
+        <h3 class="font-bold text-lg mb-3 text-gray-800 dark:text-white">📋 Règles du jeu</h3>
+        <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-2">
+          <li>• 2 joueurs, 4 rounds</li>
+          <li>• Chaque round = les deux joueurs jouent</li>
+          <li>• Chances = longueur du mot + 3</li>
+          <li>• Égalité 2-2 = round supplémentaire</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Écran de jeu principal -->
+    <div id="ecran-jeu" class="hidden bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8">
+      <!-- En-tête du round -->
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center gap-4 mb-4">
+          <span id="round-titre" class="text-2xl font-bold text-blue-600 dark:text-blue-400">Round 1</span>
+          <div class="flex gap-2">
+            <span id="score-j1"
+              class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold">Lionel:
+              0</span>
+            <span id="score-j2"
+              class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">Mariel:
+              0</span>
+          </div>
+        </div>
+        <p id="tour-actuel" class="text-lg text-gray-600 dark:text-gray-300">Tour de Lionel</p>
+      </div>
+
+      <!-- Zone de saisie du mot -->
+      <div id="zone-saisie-mot" class="mb-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+        <h3 class="font-bold text-lg mb-3 text-blue-800 dark:text-blue-300" id="instruction-saisie">Lionel,
+          saisissez un mot à faire deviner</h3>
+        <div class="flex gap-2">
+          <input type="text" id="input-mot"
+            class="flex-1 px-4 py-3 border border-blue-300 dark:border-blue-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-blue-800/30 dark:text-white"
+            placeholder="Entrez un mot...">
+          <button onclick="validerMot()"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 rounded-lg transition-all duration-200">
+            Valider
+          </button>
+        </div>
+      </div>
+
+      <!-- Zone de jeu -->
+      <div id="zone-jeu" class="hidden">
+        <!-- Affichage du mot masqué -->
+        <div class="text-center mb-8">
+          <div id="mot-masque" class="flex justify-center gap-2 mb-4 flex-wrap"></div>
+          <p id="chances-restantes" class="text-lg font-semibold text-red-600 dark:text-red-400">Chances
+            restantes: 0</p>
+        </div>
+
+        <!-- Lettres proposées -->
+        <div class="mb-6">
+          <h3 class="font-bold mb-3 text-gray-700 dark:text-gray-300">Lettres proposées</h3>
+          <div id="lettres-proposees" class="flex gap-2 flex-wrap min-h-8"></div>
+        </div>
+
+        <!-- Clavier virtuel -->
+        <div class="mb-6">
+          <h3 class="font-bold mb-3 text-gray-700 dark:text-gray-300">Proposer une lettre</h3>
+          <div class="grid grid-cols-7 gap-2" id="clavier"></div>
+        </div>
+
+        <!-- Message de statut -->
+        <div id="message-statut" class="text-center p-4 rounded-lg mb-4"></div>
+      </div>
+    </div>
+
+    <!-- Écran de fin -->
+    <div id="ecran-fin"
+      class="hidden bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center animate-bounce-in">
+      <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">🎉 Partie Terminée !</h2>
+      <div id="resultat-final" class="text-xl mb-6"></div>
+      <button onclick="rejouer()"
+        class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200">
+        🔄 Rejouer
+      </button>
+    </div>
+  </div>
+
+  <script>
+    class JeuPandu {
+      constructor() {
+        this.joueurs = [];
+        this.roundActuel = 1;
+        this.roundsTotaux = 4;
+        this.partieTerminee = false;
+        this.joueurActuel = null;
+        this.motADeviner = '';
+        this.lettresTrouvees = [];
+        this.lettresProposees = [];
+        this.chancesRestantes = 0;
+        this.motMasque = [];
+        this.phase = 'saisie'; // 'saisie' ou 'deviner'
+      }
+
+      demarrer(nomJ1, nomJ2) {
+        this.joueurs = [
+          { nom: nomJ1, score: 0 },
+          { nom: nomJ2, score: 0 }
+        ];
+        this.roundActuel = 1;
+        this.partieTerminee = false;
+        this.prochainTour();
+      }
+
+      prochainTour() {
+        // Alternance des rôles
+        if (this.roundActuel > this.roundsTotaux) {
+          this.verifierScoreFinal();
+          return;
+        }
+
+        const donneurIndex = (this.roundActuel - 1) % 2;
+        this.donneur = this.joueurs[donneurIndex];
+        this.deviseur = this.joueurs[1 - donneurIndex];
+        this.phase = 'saisie';
+        this.miseAJourInterface();
+      }
+
+      definirMot(mot) {
+        this.motADeviner = mot.toLowerCase();
+        this.lettresTrouvees = [];
+        this.lettresProposees = [];
+        this.chancesRestantes = this.motADeviner.length + 3;
+        this.motMasque = Array(this.motADeviner.length).fill('_');
+        this.phase = 'deviner';
+        this.miseAJourInterface();
+        this.genererClavier();
+      }
+
+      proposerLettre(lettre) {
+        if (this.lettresProposees.includes(lettre)) {
+          this.afficherMessage('⚠️ Lettre déjà proposée !', 'warning');
+          return;
+        }
+
+        this.lettresProposees.push(lettre);
+        const boutonLettre = document.querySelector(`[data-lettre="${lettre}"]`);
+        if (boutonLettre) boutonLettre.disabled = true;
+
+        if (this.motADeviner.includes(lettre)) {
+          // Lettre correcte
+          for (let i = 0; i < this.motADeviner.length; i++) {
+            if (this.motADeviner[i] === lettre) {
+              this.motMasque[i] = lettre;
+              if (!this.lettresTrouvees.includes(lettre)) {
+                this.lettresTrouvees.push(lettre);
+              }
+            }
+          }
+          this.afficherMessage('✅ Bonne lettre !', 'success');
+        } else {
+          // Lettre incorrecte
+          this.chancesRestantes--;
+          this.afficherMessage('❌ Lettre incorrecte !', 'error');
+        }
+
+        this.miseAJourInterface();
+
+        if (this.motMasque.join('') === this.motADeviner) {
+          this.deviseur.score++;
+          this.afficherMessage(`🎉 ${this.deviseur.nom} a trouvé le mot !`, 'success');
+          setTimeout(() => {
+            this.finTour();
+          }, 2000);
+        } else if (this.chancesRestantes <= 0) {
+          this.afficherMessage(`💔 ${this.deviseur.nom} a épuisé ses chances ! Le mot était: ${this.motADeviner}`, 'error');
+          setTimeout(() => {
+            this.finTour();
+          }, 3000);
+        }
+      }
+
+      finTour() {
+        // Vérifier si les deux joueurs ont joué dans ce round
+        const toursDansRound = (this.roundActuel * 2) - 1;
+        const totalToursJoues = this.joueurs[0].score + this.joueurs[1].score;
+
+        if (totalToursJoues >= toursDansRound) {
+          this.roundActuel++;
+        }
+
+        if (this.roundActuel > this.roundsTotaux) {
+          this.verifierScoreFinal();
+        } else {
+          this.prochainTour();
+        }
+      }
+
+      verifierScoreFinal() {
+        this.partieTerminee = true;
+        const j1 = this.joueurs[0];
+        const j2 = this.joueurs[1];
+
+        let message = '';
+        if (j1.score > j2.score) {
+          message = `🏆 ${j1.nom} gagne avec ${j1.score} points contre ${j2.score} !`;
+        } else if (j2.score > j1.score) {
+          message = `🏆 ${j2.nom} gagne avec ${j2.score} points contre ${j1.score} !`;
+        } else {
+          message = `🤝 Égalité parfaite ! ${j1.score} - ${j2.score}`;
+        }
+
+        document.getElementById('resultat-final').innerHTML = `
+                    <p class="text-2xl mb-2">${message}</p>
+                    <p class="text-gray-600 dark:text-gray-300">${j1.nom}: ${j1.score} points | ${j2.nom}: ${j2.score} points</p>
+                `;
+
+        document.getElementById('ecran-jeu').classList.add('hidden');
+        document.getElementById('ecran-fin').classList.remove('hidden');
+      }
+
+      miseAJourInterface() {
+        // Mettre à jour les scores
+        document.getElementById('score-j1').textContent = `${this.joueurs[0].nom}: ${this.joueurs[0].score}`;
+        document.getElementById('score-j2').textContent = `${this.joueurs[1].nom}: ${this.joueurs[1].score}`;
+
+        // Mettre à jour le round
+        document.getElementById('round-titre').textContent = `Round ${this.roundActuel}`;
+
+        if (this.phase === 'saisie') {
+          document.getElementById('zone-saisie-mot').classList.remove('hidden');
+          document.getElementById('zone-jeu').classList.add('hidden');
+          document.getElementById('instruction-saisie').textContent = `${this.donneur.nom}, saisissez un mot à faire deviner`;
+          document.getElementById('tour-actuel').textContent = `${this.donneur.nom} choisit un mot`;
+        } else {
+          document.getElementById('zone-saisie-mot').classList.add('hidden');
+          document.getElementById('zone-jeu').classList.remove('hidden');
+          document.getElementById('tour-actuel').textContent = `${this.deviseur.nom} devine le mot`;
+
+          // Afficher le mot masqué
+          const motMasqueEl = document.getElementById('mot-masque');
+          motMasqueEl.innerHTML = '';
+          this.motMasque.forEach((lettre, index) => {
+            const div = document.createElement('div');
+            div.className = 'letter-box';
+            div.textContent = lettre;
+            motMasqueEl.appendChild(div);
+          });
+
+          // Afficher les chances
+          document.getElementById('chances-restantes').textContent = `Chances restantes: ${this.chancesRestantes}`;
+
+          // Afficher les lettres proposées
+          const lettresProposeesEl = document.getElementById('lettres-proposees');
+          lettresProposeesEl.innerHTML = '';
+          this.lettresProposees.forEach(lettre => {
+            const span = document.createElement('span');
+            span.className = 'px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-sm';
+            span.textContent = lettre;
+            lettresProposeesEl.appendChild(span);
+          });
+        }
+      }
+
+      genererClavier() {
+        const clavier = document.getElementById('clavier');
+        clavier.innerHTML = '';
+        const lettres = 'abcdefghijklmnopqrstuvwxyz';
+
+        lettres.split('').forEach(lettre => {
+          const button = document.createElement('button');
+          button.className = 'keyboard-key';
+          button.textContent = lettre;
+          button.setAttribute('data-lettre', lettre);
+          button.onclick = () => this.proposerLettre(lettre);
+          clavier.appendChild(button);
+        });
+      }
+
+      afficherMessage(texte, type) {
+        const messageEl = document.getElementById('message-statut');
+        messageEl.textContent = texte;
+        messageEl.className = 'text-center p-4 rounded-lg mb-4 animate-pulse ';
+
+        switch (type) {
+          case 'success':
+            messageEl.classList.add('bg-green-100', 'text-green-800', 'dark:bg-green-900', 'dark:text-green-200');
+            break;
+          case 'error':
+            messageEl.classList.add('bg-red-100', 'text-red-800', 'dark:bg-red-900', 'dark:text-red-200');
+            break;
+          case 'warning':
+            messageEl.classList.add('bg-yellow-100', 'text-yellow-800', 'dark:bg-yellow-900', 'dark:text-yellow-200');
+            break;
+        }
+
+        setTimeout(() => {
+          messageEl.textContent = '';
+          messageEl.className = 'text-center p-4 rounded-lg mb-4';
+        }, 2000);
+      }
+    }
+
+    const jeu = new JeuPandu();
+
+    function demarrerJeu() {
+      const j1 = document.getElementById('joueur1').value || 'Joueur1';
+      const j2 = document.getElementById('joueur2').value || 'Joueur2';
+
+      document.getElementById('ecran-accueil').classList.add('hidden');
+      document.getElementById('ecran-jeu').classList.remove('hidden');
+
+      jeu.demarrer(j1, j2);
+    }
+
+    function validerMot() {
+      const mot = document.getElementById('input-mot').value.trim();
+      if (mot.length < 2) {
+        alert('Le mot doit contenir au moins 2 lettres');
+        return;
+      }
+      if (!/^[a-zA-Z]+$/.test(mot)) {
+        alert('Le mot ne doit contenir que des lettres');
+        return;
+      }
+
+      jeu.definirMot(mot);
+      document.getElementById('input-mot').value = '';
+    }
+
+    function rejouer() {
+      document.getElementById('ecran-fin').classList.add('hidden');
+      document.getElementById('ecran-accueil').classList.remove('hidden');
+    }
+
+    // Permettre la soumission avec Entrée
+    document.getElementById('input-mot').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        validerMot();
+      }
+    });
+  </script>
+</body>
+
+</html>
